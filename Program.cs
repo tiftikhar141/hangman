@@ -4,8 +4,7 @@
     {
         static void Main(string[] args)
         {
-            string word = GenerateWord();
-            Console.WriteLine(word);
+            
         }
 
         static string GenerateWord()
@@ -41,6 +40,14 @@
             int randomIndex = Random.Shared.Next(0, words.Count);
 
             return words[randomIndex];
+        }
+
+        static void DisplayWord(string word)
+        {
+            for (int i = 0; i < word.Length; i++)
+            {
+                Console.Write("_");
+            }
         }
 
         static void Draw()
