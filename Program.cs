@@ -4,8 +4,7 @@
     {
         static void Main(string[] args)
         {
-            //DisplayWord(GenerateWord().ToLower());
-            DisplayWord("cat");
+            StartGame(GenerateWord().ToLower());
         }
 
         static string GenerateWord()
@@ -43,7 +42,7 @@
             return words[randomIndex];
         }
 
-        static void DisplayWord(string generatedWord)
+        static void StartGame(string generatedWord)
         {
             string word = "";
             char[] letterBank = generatedWord.ToCharArray();
@@ -52,7 +51,7 @@
             Console.WriteLine(blanks);
 
             char[] guessWord = blanks.ToCharArray();
-            int tries = 5;
+            int tries = 6;
 
             do
             {
@@ -79,6 +78,7 @@
                 // remove a try ONLY if letter does not exist ANYWHERE in the array
                 if (!guessWord.Contains(guessLetter))
                 {
+                    DrawHangman(tries);
                     tries--;
                 }
 
@@ -99,36 +99,34 @@
             Console.WriteLine($"The word was {generatedWord}");
         }
 
-        static void Draw(int stage)
+        static void DrawHangman(int stage)
         {
             string[] hangmanStages = new string[]
             {
-                " ___\n |   O\n |\n |\n_|_",              // 1 wrong guess
-                " ___\n |   O\n |   |\n |\n_|_",          // 2 wrong guesses
-                " ___\n |   O\n |  /|\n |\n_|_",          // 3 wrong guesses
-                " ___\n |   O\n |  /|\\\n |\n_|_",        // 4 wrong guesses
-                " ___\n |   O\n |  /|\\\n |  / \\\n_|_"   // 5 wrong guesses
+                " ___\n |   O\n |\n |\n_|_",              
+                " ___\n |   O\n |   |\n |\n_|_",          
+                " ___\n |   O\n |  /|\n |\n_|_",          
+                " ___\n |   O\n |  /|\\\n |\n_|_",
+                " ___\n |   O\n |  /|\\\n |  /\n_|_",     
+                " ___\n |   O\n |  /|\\\n |  / \\\n_|_"   
             };
 
             // a number is passed to this method as an argument
             // everytime that number decreases from its initial value, we should increase the value of the index
             // and then we should print out the index position of the array of strings we have, representing each stage
 
-            //if (stage == 4)
-            //{
-            //    Console.WriteLine(hangmanStages[0]);
-            //}
-            //if (stage == 1)
-            //{
-            //    Console.WriteLine("O");
-            //    Console.WriteLine("|");
-            //}
-            //if (stage == 0)
-            //{
-            //    Console.WriteLine("O");
-            //    Console.WriteLine("|");
-            //    Console.WriteLine(@"/\");
-            //}
+            if (stage == 6)
+                Console.WriteLine(hangmanStages[0]);
+            if (stage == 5)
+                Console.WriteLine(hangmanStages[1]);
+            if (stage == 4)
+                Console.WriteLine(hangmanStages[2]);
+            if (stage == 3)
+                Console.WriteLine(hangmanStages[3]);
+            if (stage == 2)
+                Console.WriteLine(hangmanStages[4]);
+            if (stage == 1)
+                Console.WriteLine(hangmanStages[5]);
         }
     }
 }
