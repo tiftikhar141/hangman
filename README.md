@@ -2,6 +2,7 @@
 
 ## How to run
 Before running the program, update line 12 in the code
+
 string filepath = "C:\\Users\\tifti\\source\\repos\\Hangman\\words.txt"; 
 
 You want to update the path pointing to wherever you downloaded or placed the words.txt file.
