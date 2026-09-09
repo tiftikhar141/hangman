@@ -4,6 +4,7 @@
     {
         static void Main(string[] args)
         {
+            //DisplayWord(GenerateWord().ToLower());
             DisplayWord("cat");
         }
 
@@ -44,14 +45,12 @@
 
         static void DisplayWord(string generatedWord)
         {
-            for (int i = 0; i < generatedWord.Length; i++)
-            {
-                Console.Write("_");
-            }
-            Console.WriteLine();
+            string updatedWord = new string('_', generatedWord.Length);  
+            Console.WriteLine(updatedWord);
 
-            string updatedWord = "";
             int numberOfTries = 3;
+
+            char[] letters = updatedWord.ToCharArray(); // convert string to array of individual letters
 
             // update word and display it after each guess
             // if users guess has a character that matches the character in the generated word in the same location then show that character
@@ -63,41 +62,41 @@
                 guess = Console.ReadLine();
 
                 // condition in case word is too large (out of bounds array)
-                if (guess.Length > guess.Length)
+                if (guess.Length > generatedWord.Length)
                 {
-                    
+                    Console.WriteLine("Guess exceeds length of word!");
+                    Console.WriteLine(updatedWord);
+                    continue;
                 }
 
                 for (int i = 0; i < guess.Length; i++)
                 {
-                    // if character in userinput matches character in generated word
+                    // if character in guess matches character in generated word
                     if (guess[i] == generatedWord[i])
                     {
-                        updatedWord += guess[i];
-                    } else
-                    {
-                        updatedWord += "_";
+                        // update that specific character from _ in updated word letters array, to a letter from the guess
+                        letters[i] = guess[i];
                     }
+                    
                 }
                 if (guess == generatedWord)
                 {
                     Console.WriteLine("\nCongratulations you got the word!");
                     break;
                 }
-                numberOfTries--;
-                Console.WriteLine($"{updatedWord}");
-                updatedWord = "";
-                
-                Draw(numberOfTries);
 
+                numberOfTries--; 
+                updatedWord = new string(letters); // convert back to string
+                Console.WriteLine($"{updatedWord}");                
+                Draw(numberOfTries);
             } while (numberOfTries > 0);
 
-            Console.WriteLine("Game Over!");
+            if (numberOfTries <= 0) 
+                Console.WriteLine($"Game Over! The word was {generatedWord}");
         }
 
         static void Draw(int stage)
         {
-            // Final Sprite should look like this
             if (stage == 2)
             {
                 Console.WriteLine("O");
