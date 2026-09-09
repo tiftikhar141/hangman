@@ -12,3 +12,4 @@ C:\Users\tifti\source\repos\Hangman\obj\Debug\net10.0\refint\Hangman.dll
 C:\Users\tifti\source\repos\Hangman\obj\Debug\net10.0\Hangman.pdb
 C:\Users\tifti\source\repos\Hangman\obj\Debug\net10.0\Hangman.genruntimeconfig.cache
 C:\Users\tifti\source\repos\Hangman\obj\Debug\net10.0\ref\Hangman.dll
+C:\Users\tifti\source\repos\Hangman\obj\Debug\net10.0\Hangman.sourcelink.json
