@@ -45,73 +45,83 @@
 
         static void DisplayWord(string generatedWord)
         {
-            string updatedWord = new string('_', generatedWord.Length);  
-            Console.WriteLine(updatedWord);
+            string word;
+            char[] letterBank = generatedWord.ToCharArray();
 
-            int numberOfTries = 3;
+            string blanks = new string('_', generatedWord.Length);  
+            Console.WriteLine(blanks);
 
-            char[] letters = updatedWord.ToCharArray(); // convert string to array of individual letters
+            char[] guessWord = blanks.ToCharArray();
+            int tries = 5;
 
-            // update word and display it after each guess
-            // if users guess has a character that matches the character in the generated word in the same location then show that character
-            // otherwise continue to show _
-            // ie) generatedWord = cat, guess = car, updatedWord should be ca_
-            string guess;
             do
             {
-                guess = Console.ReadLine();
+                // get char from user
+                char guess = Convert.ToChar(Console.ReadLine());
 
-                // condition in case word is too large (out of bounds array)
-                if (guess.Length > generatedWord.Length)
+                for (int i = 0; i < letterBank.Length; i++)
                 {
-                    Console.WriteLine("Guess exceeds length of word!");
-                    Console.WriteLine(updatedWord);
-                    continue;
-                }
-
-                for (int i = 0; i < guess.Length; i++)
-                {
-                    // if character in guess matches character in generated word
-                    if (guess[i] == generatedWord[i])
+                    // if guess matches a letter 
+                    if (letterBank[i] == guess)
                     {
-                        // update that specific character from _ in updated word letters array, to a letter from the guess
-                        letters[i] = guess[i];
+                        // update the blank spot _ in guess word to the guess letter in that location of the word
+                        guessWord[i] = guess;
                     }
-                    
                 }
-                if (guess == generatedWord)
+
+                // remove a try ONLY if letter does not exist ANYWHERE in the array
+                if (!guessWord.Contains(guess))
                 {
-                    Console.WriteLine("\nCongratulations you got the word!");
+                    tries--;
+                }
+
+                word = new string(guessWord);
+
+                if (word == generatedWord)
+                {
+                    Console.WriteLine("You Win!");
                     break;
                 }
 
-                numberOfTries--; 
-                updatedWord = new string(letters); // convert back to string
-                Console.WriteLine($"{updatedWord}");                
-                Draw(numberOfTries);
-            } while (numberOfTries > 0);
+                Console.WriteLine(word);
+            } while (tries > 0);
 
-            if (numberOfTries <= 0) 
-                Console.WriteLine($"Game Over! The word was {generatedWord}");
+            if (word != generatedWord)
+                Console.WriteLine("You Lose!");
+
+            Console.WriteLine($"The word was {generatedWord}");
         }
 
         static void Draw(int stage)
         {
-            if (stage == 2)
+            string[] hangmanStages = new string[]
             {
-                Console.WriteLine("O");
-            }
-            if (stage == 1)
-            {
-                Console.WriteLine("O");
-                Console.WriteLine("|");
-            }
-            if (stage == 0)
-            {
-                Console.WriteLine("O");
-                Console.WriteLine("|");
-                Console.WriteLine(@"/\");
-            }
+                " ___\n |   O\n |\n |\n_|_",              // 1 wrong guess
+                " ___\n |   O\n |   |\n |\n_|_",          // 2 wrong guesses
+                " ___\n |   O\n |  /|\n |\n_|_",          // 3 wrong guesses
+                " ___\n |   O\n |  /|\\\n |\n_|_",        // 4 wrong guesses
+                " ___\n |   O\n |  /|\\\n |  / \\\n_|_"   // 5 wrong guesses
+            };
+
+            // a number is passed to this method as an argument
+            // everytime that number decreases from its initial value, we should increase the value of the index
+            // and then we should print out the index position of the array of strings we have, representing each stage
+
+            //if (stage == 4)
+            //{
+            //    Console.WriteLine(hangmanStages[0]);
+            //}
+            //if (stage == 1)
+            //{
+            //    Console.WriteLine("O");
+            //    Console.WriteLine("|");
+            //}
+            //if (stage == 0)
+            //{
+            //    Console.WriteLine("O");
+            //    Console.WriteLine("|");
+            //    Console.WriteLine(@"/\");
+            //}
         }
     }
 }
