@@ -45,7 +45,7 @@
 
         static void DisplayWord(string generatedWord)
         {
-            string word;
+            string word = "";
             char[] letterBank = generatedWord.ToCharArray();
 
             string blanks = new string('_', generatedWord.Length);  
@@ -56,21 +56,28 @@
 
             do
             {
-                // get char from user
-                char guess = Convert.ToChar(Console.ReadLine());
+                string userInput = Console.ReadLine();
+
+                if (userInput.Length != 1)
+                {
+                    Console.WriteLine("Guess is too large! Only provide 1 letter at a time.");
+                    continue;
+                }
+
+                char guessLetter = userInput[0];
 
                 for (int i = 0; i < letterBank.Length; i++)
                 {
                     // if guess matches a letter 
-                    if (letterBank[i] == guess)
+                    if (letterBank[i] == guessLetter)
                     {
                         // update the blank spot _ in guess word to the guess letter in that location of the word
-                        guessWord[i] = guess;
+                        guessWord[i] = guessLetter;
                     }
                 }
 
                 // remove a try ONLY if letter does not exist ANYWHERE in the array
-                if (!guessWord.Contains(guess))
+                if (!guessWord.Contains(guessLetter))
                 {
                     tries--;
                 }
